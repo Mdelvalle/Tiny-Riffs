@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import RiffSettings from "./screens/RiffSettings";
 import RecordRiff from "./screens/RecordRiff";
 import Navigation from "./screens/Navigation";
 
@@ -6,8 +7,9 @@ export default function Page() {
   return (
     <View style={styles.container}>
       {/* <PlayRiff title="Morning Noodle" date="4/13/23" timeSignature="4/4"/> */}
-      <RecordRiff></RecordRiff>
-      <Navigation style={styles.navigation} current="riffs"/>
+      <RiffSettings />
+      <RecordRiff />
+      <Navigation style={styles.navigation} current="record"/>
     </View>
   );
 }
