@@ -8,8 +8,7 @@ export default function Navigation({current}) {
         return (
           <Text
             key={`${idx}-${navItem}`}
-            className={current === navItem ? styles.current : ''}
-            style={styles.navItem}>{navItem}
+            style={[styles.navItem, current === navItem && styles.current]}>{navItem}
           </Text>
         );
       })}
@@ -19,18 +18,21 @@ export default function Navigation({current}) {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    backgroundColor: "purple",
-    borderColor: "white",
+    alignItems: 'flex-start',
+    borderColor: 'white',
     borderTopWidth: 2,
-    flexDirection: "row",
-    height: 36,
-    justifyContent: "space-evenly",
+    flexDirection: 'row',
+    height: 72,
+    justifyContent: 'space-around',
+    paddingTop: 9,
   },
   navItem: {
-    color: "white",
-    fontSize: 12,
-    textTransform: "uppercase",
+    color: 'white',
+    fontSize: 24,
+    textTransform: 'uppercase',
+  },
+  pL: {
+    paddingLeft: 18,
   },
   current: {
     color: "purple",
