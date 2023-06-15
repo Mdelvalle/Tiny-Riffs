@@ -1,6 +1,6 @@
-import { ImageComponent, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-export default function PlayRiff({title, date, timeSignature}) {
+const PlayRiff = ({title, date, timeSignature}) => {
   return (
     <View style={styles.container}>
       <View style={styles.info}>
@@ -51,3 +51,5 @@ const styles = StyleSheet.create({
     marginRight: 12,
   }
 });
+
+export default PlayRiff;

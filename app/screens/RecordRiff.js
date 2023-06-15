@@ -1,97 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import TimeSignatureButton from '../components/TimeSignatureButton';
+import TimesToLoop from '../components/TimesToLoop';
+import RecordButton from '../components/RecordButton';
 
 
-const TimeSignatureButton = ({top, bottom, selected, onPress, isFirst}) => {
-  return (
-    <Pressable
-      style={[
-        styles.button,
-        selected && styles.selectedButton,
-        isFirst && styles.mr
-      ]}
-      onPress={onPress}
-    >
-      <Text style={[styles.text, selected && styles.selectedText]}>
-        {`${top}/${bottom}`}
-      </Text>
-    </Pressable>
-  );
-};
-
-const TimesToLoop = ({onPress}) => {
-  return (
-    <View style={loopStyles.container}>
-      <Pressable>
-        <Text style={[loopStyles.multiplier, loopStyles.divider]}>x1</Text>
-      </Pressable>
-      <Pressable>
-        <Text style={[loopStyles.multiplier, loopStyles.divider]}>x2</Text>
-      </Pressable>
-      <Pressable>
-        <Text style={[loopStyles.multiplier, loopStyles.divider]}>x3</Text>
-      </Pressable>
-      <Pressable>
-        <Text style={loopStyles.multiplier}>x4</Text>
-      </Pressable>
-    </View>
-  );
-};
-const loopStyles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 90,
-    borderRadius: 36,
-    borderWidth: 1,
-    borderColor: 'white',
-    justifyContent: 'space-evenly',
-    width: 192,
-  },
-  divider: {
-    borderColor: 'white',
-    borderRightWidth: 1,
-    paddingRight: 9,
-  },
-  multiplier: {
-    color: 'white',
-    fontSize: 24,
-  }
-});
-
-const RecordButton = ({onPress}) => {
-  return (
-    <Pressable
-      style={recordStyles.recordButton}
-      onPress={onPress}
-    >
-      <View style={recordStyles.recordButtonInner}></View>
-    </Pressable>
-  );
-};
-
-const recordStyles = StyleSheet.create({
-  recordButton: {
-    alignItems: 'center',
-    width: 90,
-    height: 90,
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: 'white',
-    justifyContent: 'center',
-  },
-  recordButtonInner: {
-    backgroundColor: "white",
-    width: 36,
-    height: 36,
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: 'white',
-    justifyContent: 'center',
-  },
-})
-
-export default function RecordRiff() {
+const RecordRiff = () => {
   const [selectedButton, setSelectedButton] = useState('');
 
   const handleTimeSignatureButtonPress = (button) => {
@@ -122,7 +36,6 @@ export default function RecordRiff() {
             bottom={8}
             selected={selectedButton === '3'}
             onPress={() => handleTimeSignatureButtonPress('3')}
-            style={[styles.mr]}
             isFirst
           />
           <TimeSignatureButton
@@ -151,29 +64,9 @@ const styles = StyleSheet.create({
   timeSignaturesRow: {
     flexDirection: 'row',
   },
-  button: {
-    alignItems: 'center',
-    width: 90,
-    height: 90,
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: 'white',
-    justifyContent: 'center',
-  },
   mb: {
     marginBottom: 24,
   },
-  mr: {
-    marginRight: 24,
-  },
-  selectedButton: {
-    borderColor: 'green',
-  },
-  text: {
-    color: 'white',
-    fontSize: 24,
-  },
-  selectedText: {
-    color: 'green',
-  },
 });
+
+export default RecordRiff;

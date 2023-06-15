@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function RiffSettings({current}) {
+const RiffSettings = ({current}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.wheel}>*</Text>
@@ -19,3 +19,5 @@ const styles = StyleSheet.create({
     fontSize: 36,
   }
 });
+
+export default RiffSettings;

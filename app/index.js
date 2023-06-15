@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import RiffSettings from "./screens/RiffSettings";
 import RecordRiff from "./screens/RecordRiff";
 import Navigation from "./screens/Navigation";
 
-export default function Page() {
+const Page = () => {
   return (
     <View style={styles.container}>
       {/* <PlayRiff title="Morning Noodle" date="4/13/23" timeSignature="4/4"/> */}
@@ -23,3 +23,5 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   }
 });
+
+export default Page;

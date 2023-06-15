@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Navigation({current}) {
+const Navigation = ({current}) => {
   const navItems = ['riffs', 'record', 'loops'];
   return (
     <View style={styles.container}>
@@ -38,3 +38,5 @@ const styles = StyleSheet.create({
     color: "purple",
   }
 });
+
+export default Navigation;
