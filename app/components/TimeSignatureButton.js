@@ -23,7 +23,7 @@ const styles = StyleSheet.create({button: {
     width: 90,
     height: 90,
     borderRadius: 50,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'white',
     justifyContent: 'center',
   },

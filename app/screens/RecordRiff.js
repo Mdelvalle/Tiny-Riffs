@@ -7,9 +7,14 @@ import RecordButton from '../components/RecordButton';
 
 const RecordRiff = () => {
   const [selectedButton, setSelectedButton] = useState('');
+  const [recording, setRecording] = useState(false);
 
   const handleTimeSignatureButtonPress = (button) => {
     setSelectedButton(button);
+  };
+
+  const handleRecordButtonPress = () => {
+    setRecording(!recording);
   };
 
   return (
@@ -47,7 +52,10 @@ const RecordRiff = () => {
         </View>
       </View>
       <TimesToLoop />
-      <RecordButton />
+      <RecordButton
+        recording={recording}
+        onPress={() => handleRecordButtonPress()}
+      />
     </View>
   );
 }
