@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function RiffSettings({current}) {
+const RiffSettings = ({ current }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.wheel}>*</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -15,7 +15,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   wheel: {
+    fontFamily: 'Virgil',
     color: 'white',
     fontSize: 36,
-  }
+  },
 });
+
+export default RiffSettings;
