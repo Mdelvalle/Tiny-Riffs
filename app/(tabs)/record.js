@@ -1,11 +1,15 @@
 import { StyleSheet, View } from 'react-native';
 import { useState } from 'react';
-import TimeSignatureButton from '../components/TimeSignatureButton';
-import TimesToLoop from '../components/TimesToLoop';
-import RecordButton from '../components/RecordButton';
+import TimeSignatureButton from '@components/record/TimeSignatureButton';
+import TimesToLoop from '@components/record/TimesToLoop';
+import RecordButton from '@components/record/RecordButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Constants from 'expo-constants';
+import { StatusBar } from 'expo-status-bar'
 
 
-const RecordRiff = () => {
+
+const Record = () => {
   const [selectedButton, setSelectedButton] = useState('');
   const [recording, setRecording] = useState(false);
 
@@ -18,7 +22,8 @@ const RecordRiff = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar style='light' backgroundColor='black'></StatusBar>
       <View>
         <View style={[styles.timeSignaturesRow, styles.mb]}>
           <TimeSignatureButton
@@ -56,18 +61,20 @@ const RecordRiff = () => {
         recording={recording}
         onPress={() => handleRecordButtonPress()}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    backgroundColor: 'black',
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
     padding: 24,
+    marginTop: Constants.statusBarHeight,
   },
   timeSignaturesRow: {
     flexDirection: 'row',
@@ -77,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RecordRiff;
+export default Record;

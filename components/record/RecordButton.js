@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   recordingOuter: {
-    backgroundColor: 'red',
+    backgroundColor: 'orangered',
   },
   recordButtonInner: {
     backgroundColor: "white",

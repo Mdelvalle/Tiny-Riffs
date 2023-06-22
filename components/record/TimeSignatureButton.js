@@ -28,15 +28,16 @@ const styles = StyleSheet.create({button: {
     justifyContent: 'center',
   },
   selectedButton: {
-    borderColor: 'green',
+    borderColor: 'purple',
   },
   mr: {
     marginRight: 24,
   },
   selectedText: {
-    color: 'green',
+    color: 'purple',
   },
   text: {
+    fontFamily: 'Virgil',
     color: 'white',
     fontSize: 24,
   },

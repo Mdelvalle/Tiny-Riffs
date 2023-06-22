@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   wheel: {
+    fontFamily: 'Virgil',
     color: 'white',
     fontSize: 36,
   }

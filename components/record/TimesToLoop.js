@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     paddingRight: 9,
   },
   multiplier: {
+    fontFamily: 'Virgil',
     color: 'white',
     fontSize: 24,
   }

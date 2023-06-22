@@ -5,6 +5,9 @@
       "bundler": "metro"
     },
     "name": "Tiny-Riffs",
-    "slug": "Tiny-Riffs"
+    "slug": "Tiny-Riffs",
+    "androidStatusBar": {
+      "backgroundColor": "blue"
+    }
   }
 }
