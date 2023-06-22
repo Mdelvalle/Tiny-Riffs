@@ -1,8 +1,7 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { COLOR, FONT, SIZE } from '@constants/theme';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-
-const TimesToLoop = ({onPress}) => {
+const TimesToLoop = ({ onPress }) => {
   return (
     <View style={styles.container}>
       <Pressable>
@@ -20,6 +19,7 @@ const TimesToLoop = ({onPress}) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT.family,
     color: COLOR.light,
     fontSize: SIZE.lg,
-  }
+  },
 });
 
 export default TimesToLoop;

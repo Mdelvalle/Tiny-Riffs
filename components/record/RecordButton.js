@@ -1,17 +1,15 @@
-import { Pressable, StyleSheet, View } from 'react-native';
 import { COLOR } from '@constants/theme';
+import { Pressable, StyleSheet, View } from 'react-native';
 
-
-const RecordButton = ({onPress, recording}) => {
+const RecordButton = ({ onPress, recording }) => {
   return (
     <Pressable
       style={[styles.recordButton, recording && styles.recordingOuter]}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <View
-        style={recording ? styles.recordingInner : styles.recordButtonInner}
-      >
-      </View>
+        style={
+          recording ? styles.recordingInner : styles.recordButtonInner
+        }></View>
     </Pressable>
   );
 };

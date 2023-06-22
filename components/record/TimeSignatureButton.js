@@ -1,17 +1,15 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
 import { COLOR, FONT, SIZE } from '@constants/theme';
+import { Pressable, StyleSheet, Text } from 'react-native';
 
-
-const TimeSignatureButton = ({top, bottom, selected, onPress, isFirst}) => {
+const TimeSignatureButton = ({ top, bottom, selected, onPress, isFirst }) => {
   return (
     <Pressable
       style={[
         styles.button,
         selected && styles.selectedButton,
-        isFirst && styles.mr
+        isFirst && styles.mr,
       ]}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <Text style={[styles.text, selected && styles.selectedText]}>
         {`${top}/${bottom}`}
       </Text>
@@ -19,7 +17,8 @@ const TimeSignatureButton = ({top, bottom, selected, onPress, isFirst}) => {
   );
 };
 
-const styles = StyleSheet.create({button: {
+const styles = StyleSheet.create({
+  button: {
     alignItems: 'center',
     width: 90,
     height: 90,

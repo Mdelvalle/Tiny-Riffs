@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from 'react-native';
 
-const PlayRiff = ({title, date, timeSignature}) => {
+const PlayRiff = ({ title, date, timeSignature }) => {
   return (
     <View style={styles.container}>
       <View style={styles.info}>
@@ -14,42 +14,42 @@ const PlayRiff = ({title, date, timeSignature}) => {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    display: "flex",
+    alignItems: 'center',
+    display: 'flex',
     flex: 1,
-    flexDirection: "column",
+    flexDirection: 'column',
     padding: 24,
   },
   info: {
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "center",
-    marginHorizontal: "auto",
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginHorizontal: 'auto',
     maxWidth: 960,
   },
   title: {
-    color: "white",
+    color: 'white',
     fontSize: 32,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   date: {
-    color: "white",
+    color: 'white',
     fontSize: 16,
   },
   timeSignature: {
-    color: "white",
+    color: 'white',
     fontSize: 12,
   },
   actions: {
-    color: "white",
-    justifyContent: "space-between",
+    color: 'white',
+    justifyContent: 'space-between',
     marginLeft: 12,
     marginRight: 12,
-  }
+  },
 });
 
 export default PlayRiff;

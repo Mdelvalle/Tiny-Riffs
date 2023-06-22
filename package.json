@@ -5,10 +5,15 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "wifi": "expo start --tunnel",
-    "cable": "expo start —localhost -a"
+    "cable": "expo start —localhost -a",
+    "test:eslint": "echo \"\\033[33mRunning eslint check\" && eslint ."
   },
   "main": "index.js",
   "dependencies": {
+    "eslint": "^8.43.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-universe": "^11.2.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "expo": "^48.0.7",
     "expo-constants": "~14.2.1",
     "expo-font": "^11.1.1",
@@ -16,6 +21,7 @@
     "expo-router": "^1.5.3",
     "expo-splash-screen": "~0.18.1",
     "expo-status-bar": "~1.4.4",
+    "prettier": "^2.8.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.8",

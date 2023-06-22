@@ -1,14 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View } from 'react-native';
 
 const Riffs = () => {
   return (
     <View>
       <Text>Riffs</Text>
     </View>
-  )
-}
+  );
+};
 
-export default Riffs
+export default Riffs;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

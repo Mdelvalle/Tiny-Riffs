@@ -1,12 +1,12 @@
-import { StyleSheet, View } from 'react-native';
-import { useState } from 'react';
+import RecordButton from '@components/record/RecordButton';
 import TimeSignatureButton from '@components/record/TimeSignatureButton';
 import TimesToLoop from '@components/record/TimesToLoop';
-import RecordButton from '@components/record/RecordButton';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLOR, SIZE } from '@constants/theme';
 import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
-import { COLOR, SIZE } from '@constants/theme';
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Record = () => {
   const [selectedButton, setSelectedButton] = useState('');
@@ -22,7 +22,7 @@ const Record = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style='light' backgroundColor='black'></StatusBar>
+      <StatusBar style="light" backgroundColor="black"></StatusBar>
       <View>
         <View style={[styles.timeSignaturesRow, styles.mb]}>
           <TimeSignatureButton
@@ -62,7 +62,7 @@ const Record = () => {
       />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

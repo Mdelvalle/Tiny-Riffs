@@ -1,7 +1,6 @@
-import { Slot, SplashScreen } from 'expo-router';
-import { useFonts } from 'expo-font';
 import { FONT } from '@constants/theme';
-
+import { useFonts } from 'expo-font';
+import { Slot, SplashScreen } from 'expo-router';
 
 const AppLayout = () => {
   const [fontsLoaded] = useFonts(FONT.asset);
@@ -11,6 +10,6 @@ const AppLayout = () => {
   }
 
   return <Slot />;
-}
+};
 
 export default AppLayout;

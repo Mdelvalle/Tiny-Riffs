@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 const Loops = () => {
   return (
     <View>
       <Text>Loops</Text>
     </View>
-  )
-}
+  );
+};
 
-export default Loops
+export default Loops;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
