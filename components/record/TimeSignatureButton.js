@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
+import { COLOR, FONT, SIZE } from '@constants/theme';
 
 
 const TimeSignatureButton = ({top, bottom, selected, onPress, isFirst}) => {
@@ -24,22 +25,22 @@ const styles = StyleSheet.create({button: {
     height: 90,
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: COLOR.light,
     justifyContent: 'center',
   },
   selectedButton: {
-    borderColor: 'purple',
+    borderColor: COLOR.primary,
   },
   mr: {
-    marginRight: 24,
+    marginRight: SIZE.lg,
   },
   selectedText: {
-    color: 'purple',
+    color: COLOR.primary,
   },
   text: {
-    fontFamily: 'Virgil',
-    color: 'white',
-    fontSize: 24,
+    fontFamily: FONT.family,
+    color: COLOR.light,
+    fontSize: SIZE.lg,
   },
 });
 

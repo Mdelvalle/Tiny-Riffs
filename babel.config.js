@@ -10,9 +10,10 @@ module.exports = function (api) {
         "module-resolver",
         {
           alias: {
-            // This needs to be mirrored in tsconfig.json
+            // This needs to be mirrored in .jsconfig.json
             "@assets": "./assets",
             "@components": "./components",
+            "@constants": "./constants",
           },
         },
       ],

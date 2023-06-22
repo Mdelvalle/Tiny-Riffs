@@ -5,9 +5,8 @@ import TimesToLoop from '@components/record/TimesToLoop';
 import RecordButton from '@components/record/RecordButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Constants from 'expo-constants';
-import { StatusBar } from 'expo-status-bar'
-
-
+import { StatusBar } from 'expo-status-bar';
+import { COLOR, SIZE } from '@constants/theme';
 
 const Record = () => {
   const [selectedButton, setSelectedButton] = useState('');
@@ -68,19 +67,19 @@ const Record = () => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: 'black',
+    backgroundColor: COLOR.dark,
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    padding: 24,
+    padding: SIZE.lg,
     marginTop: Constants.statusBarHeight,
   },
   timeSignaturesRow: {
     flexDirection: 'row',
   },
   mb: {
-    marginBottom: 24,
+    marginBottom: SIZE.lg,
   },
 });
 

@@ -1,4 +1,5 @@
 import { Tabs } from 'expo-router'
+import { COLOR, FONT, SIZE } from '@constants/theme';
 
 const TabsLayout = () => {
   return (
@@ -6,14 +7,14 @@ const TabsLayout = () => {
       screenOptions={{
         tabBarIconStyle: null,
         tabBarLabelStyle: {
-          fontFamily: 'Virgil',
-          fontSize: 24,
+          fontFamily: FONT.family,
+          fontSize: SIZE.lg,
           textTransform: 'uppercase'
         },
-        tabBarInactiveBackgroundColor: 'black',
-        tabBarActiveBackgroundColor: 'black',
-        tabBarActiveTintColor: 'purple',
-        tabBarInactiveTintColor: 'white'
+        tabBarInactiveBackgroundColor: COLOR.dark,
+        tabBarActiveBackgroundColor: COLOR.dark,
+        tabBarActiveTintColor: COLOR.primary,
+        tabBarInactiveTintColor: COLOR.light
     }}>
       <Tabs.Screen name='riffs' options={{headerShown: false}} />
       <Tabs.Screen name='record' options={{headerShown: false}} />

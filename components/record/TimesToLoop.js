@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { COLOR, FONT, SIZE } from '@constants/theme';
 
 
 const TimesToLoop = ({onPress}) => {
@@ -26,19 +27,19 @@ const styles = StyleSheet.create({
     height: 90,
     borderRadius: 36,
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: COLOR.light,
     justifyContent: 'space-evenly',
     width: 192,
   },
   divider: {
-    borderColor: 'white',
+    borderColor: COLOR.light,
     borderRightWidth: 1,
     paddingRight: 9,
   },
   multiplier: {
-    fontFamily: 'Virgil',
-    color: 'white',
-    fontSize: 24,
+    fontFamily: FONT.family,
+    color: COLOR.light,
+    fontSize: SIZE.lg,
   }
 });
 

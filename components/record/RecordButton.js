@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, View } from 'react-native';
+import { COLOR } from '@constants/theme';
 
 
 const RecordButton = ({onPress, recording}) => {
@@ -22,28 +23,28 @@ const styles = StyleSheet.create({
     height: 90,
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: COLOR.light,
     justifyContent: 'center',
   },
   recordingOuter: {
-    backgroundColor: 'orangered',
+    backgroundColor: COLOR.secondary,
   },
   recordButtonInner: {
-    backgroundColor: "white",
+    backgroundColor: COLOR.light,
     width: 36,
     height: 36,
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: COLOR.light,
     justifyContent: 'center',
   },
   recordingInner: {
-    backgroundColor: "white",
+    backgroundColor: COLOR.light,
     width: 30,
     height: 30,
     borderRadius: 6,
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: COLOR.light,
     justifyContent: 'center',
   },
 });
