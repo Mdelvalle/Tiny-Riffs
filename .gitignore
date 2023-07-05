@@ -1,3 +1,5 @@
 node_modules
 .expo
 .vscode
+app.json
+eas.json
