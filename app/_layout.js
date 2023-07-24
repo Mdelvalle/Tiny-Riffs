@@ -8,22 +8,18 @@ import { useEffect } from 'react';
 SplashScreen.preventAutoHideAsync();
 
 const AppLayout = () => {
-  const [fontsLoaded] = useFonts(FONT.asset);
+  const [fontsLoaded, fontsError] = useFonts(FONT.asset);
 
   useEffect(() => {
     if (fontsLoaded) {
-      // Hide the splash screen after the fonts have loaded and the
-      // UI is ready.
       SplashScreen.hideAsync();
     }
-  }, [fontsLoaded]);
+    if (fontsError) {
+      console.log('Error: Loading fonts failed', fontsError);
+    }
+  }, [fontsLoaded, fontsError]);
 
-  // Prevent rendering until the font has loaded
-  if (!fontsLoaded) {
-    return null;
-  }
-
-  return <Slot />;
+  return fontsLoaded && <Slot />;
 };
 
 export default AppLayout;
