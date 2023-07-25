@@ -5,6 +5,24 @@
       "bundler": "metro"
     },
     "name": "Tiny-Riffs",
-    "slug": "Tiny-Riffs"
+    "slug": "Tiny-Riffs",
+    "extra": {
+      "eas": {
+        "projectId": "9598551b-73b3-4f72-aa9c-cb265818a51e"
+      }
+    },
+    "plugins": [
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+        }
+      ]
+    ],
+    "android": {
+      "package": "com.valleyWare.tinyRiffs",
+      "versionCode": 1
+    },
+    "sdkVersion": "48.0.0"
   }
 }

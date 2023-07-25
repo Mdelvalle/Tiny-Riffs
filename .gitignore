@@ -1,6 +1,4 @@
 node_modules
 .expo
 .vscode
-.easignore
-app.json
 eas.json
