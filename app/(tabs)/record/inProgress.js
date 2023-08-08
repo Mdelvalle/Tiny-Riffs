@@ -2,71 +2,128 @@ import RecordButton from '@components/record/RecordButton';
 import { FONT } from '@constants/theme';
 import record from '@styles/record';
 import { Audio } from 'expo-av';
-import React, { useEffect, useRef, useState } from 'react';
+import { useNavigation, useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const RecordingInProgress = () => {
-  const [isRecording, setIsRecording] = useState(true);
-  const [elapsedTime, setElapsedTime] = useState(0);
-  const recordingRef = useRef(null);
+const AUDIO_RECORDING_DIR =
+  'file:///data/user/0/com.valleyWare.tinyRiffs/cache/Audio/';
 
+const RecordingInProgress = () => {
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [recording, setRecording] = useState(null);
+  const router = useRouter();
+  const navigation = useNavigation();
+
+  /**
+   * Stop recording if user navigates away from
+   * screen while recording is still in progress
+   */
+  const handleBeforeRemove = async (e) => {
+    e.preventDefault();
+
+    try {
+      // unload recording
+      const { isRecording } = await recording?.getStatusAsync();
+      if (isRecording) {
+        await recording.stopAndUnloadAsync();
+      }
+    } catch (error) {
+      console.log('something failed when switching screens', error);
+    }
+
+    navigation.dispatch(e.data.action);
+  };
+
+  /**
+   * Initial calls
+   */
   useEffect(() => {
+    // Initialize and start recording
     startRecording();
+
+    // Update elapsed time every second while recording
+    const timer = setInterval(() => {
+      setElapsedTime((prevTime) => prevTime + 1);
+    }, 1000);
+
+    // Clean up
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
+  /**
+   * Make sure to update listener when
+   * recording or navigation changes
+   */
   useEffect(() => {
-    console.log(`> Recording has ${isRecording ? 'started' : 'ended'}.`);
-  }, [isRecording]);
+    // User action navigating away from screen
+    const beforeRemoveListener = navigation.addListener(
+      'beforeRemove',
+      handleBeforeRemove,
+    );
 
-  useEffect(() => {
-    // Update elapsed time every second while recording
-    let timer;
-    if (isRecording) {
-      timer = setInterval(() => {
-        setElapsedTime((prevTime) => prevTime + 1);
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [isRecording]);
+    // Clean up
+    return () => {
+      // unload navigation listener
+      beforeRemoveListener();
+    };
+  }, [recording, navigation]);
 
+  /**
+   * Record button handling
+   * Recording in progress is initial state
+   * Pressing button stops recording
+   */
   const handleRecordButtonPress = () => {
     stopRecording();
   };
 
+  /**
+   * Starts new audio recording
+   */
   const startRecording = async () => {
     try {
       const newRecording = new Audio.Recording();
-      console.log('Starting recording..');
       await newRecording.prepareToRecordAsync(
-        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY,
+        Audio.RecordingOptionsPresets.HIGH_QUALITY,
       );
       await newRecording.startAsync();
-      recordingRef.current = newRecording;
+      setRecording(newRecording);
     } catch (err) {
-      console.error('Failed to START recording', err);
+      console.error('Failed to start recording', err);
     }
   };
 
+  /**
+   * Stops current recording and sends
+   * recording id to review screen
+   */
   const stopRecording = async () => {
     try {
-      if (recordingRef.current) {
-        console.log('Stopping recording..');
-        await recordingRef.current.stopAndUnloadAsync();
-        const recordingUri = recordingRef.current.getURI();
-        console.log('recordingUri', recordingUri);
-        setIsRecording(false);
-        setElapsedTime(0);
+      if (recording) {
+        await recording.stopAndUnloadAsync();
+        const recordingUri = recording.getURI();
+        const recordingId = recordingUri?.split(AUDIO_RECORDING_DIR)[1];
+        setRecording(null);
 
-        // router.push('/record/review', { recordingUri });
-        // router.push('/record/review', {
-        //   recordingUri: recordingUri,
-        // });
+        router.replace({
+          pathname: '/record/review',
+          params: {
+            recordingId,
+          },
+        });
       }
     } catch (error) {
-      console.error('Failed to STOP recording', error);
+      console.error('Failed to stop recording', error);
     }
   };
 
+  /**
+   * Takes time in seconds and makes it pretty
+   * 00:00
+   */
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;

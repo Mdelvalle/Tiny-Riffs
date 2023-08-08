@@ -31,7 +31,7 @@ function RecordingSetup() {
 
   const handleRecordButtonPress = async () => {
     try {
-      router.replace('/record/inProgress');
+      router.push('/record/inProgress');
     } catch (e) {
       console.log('handleRecordButtonPress error', e);
     }
