@@ -16,6 +16,51 @@ const RecordingInProgress = () => {
   const navigation = useNavigation();
 
   /**
+   * Initial calls
+   */
+  useEffect(() => {
+    // Initialize and start recording
+    (async () => {
+      try {
+        const newRecording = new Audio.Recording();
+        await newRecording.prepareToRecordAsync(
+          Audio.RecordingOptionsPresets.HIGH_QUALITY,
+        );
+        await newRecording.startAsync();
+        setRecording(() => newRecording);
+      } catch (err) {
+        console.error('Failed to start recording', err);
+      }
+    })();
+
+    // Update elapsed time every second while recording
+    const timer = setInterval(() => {
+      setElapsedTime((prevTime) => prevTime + 1);
+    }, 1000);
+
+    // Clean up
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  /**
+   * Make sure to update listener when
+   * recording or navigation changes
+   */
+  useEffect(() => {
+    const beforeRemoveListener = navigation.addListener(
+      'beforeRemove',
+      handleBeforeRemove,
+    );
+
+    return () => {
+      // unload navigation listener
+      beforeRemoveListener();
+    };
+  }, [recording]);
+
+  /**
    * Stop recording if user navigates away from
    * screen while recording is still in progress
    */
@@ -36,64 +81,12 @@ const RecordingInProgress = () => {
   };
 
   /**
-   * Initial calls
-   */
-  useEffect(() => {
-    // Initialize and start recording
-    startRecording();
-
-    // Update elapsed time every second while recording
-    const timer = setInterval(() => {
-      setElapsedTime((prevTime) => prevTime + 1);
-    }, 1000);
-
-    // Clean up
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-
-  /**
-   * Make sure to update listener when
-   * recording or navigation changes
-   */
-  useEffect(() => {
-    // User action navigating away from screen
-    const beforeRemoveListener = navigation.addListener(
-      'beforeRemove',
-      handleBeforeRemove,
-    );
-
-    // Clean up
-    return () => {
-      // unload navigation listener
-      beforeRemoveListener();
-    };
-  }, [recording, navigation]);
-
-  /**
    * Record button handling
    * Recording in progress is initial state
    * Pressing button stops recording
    */
   const handleRecordButtonPress = () => {
     stopRecording();
-  };
-
-  /**
-   * Starts new audio recording
-   */
-  const startRecording = async () => {
-    try {
-      const newRecording = new Audio.Recording();
-      await newRecording.prepareToRecordAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY,
-      );
-      await newRecording.startAsync();
-      setRecording(newRecording);
-    } catch (err) {
-      console.error('Failed to start recording', err);
-    }
   };
 
   /**

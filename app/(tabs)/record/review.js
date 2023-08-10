@@ -3,7 +3,7 @@ import record from '@styles/record';
 import { Audio } from 'expo-av';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 
 const AUDIO_RECORDING_DIR =
   'file:///data/user/0/com.valleyWare.tinyRiffs/cache/Audio/';
@@ -11,49 +11,37 @@ const AUDIO_RECORDING_DIR =
 const RecordingReview = () => {
   const [sound, setSound] = useState();
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLooping, setIsLooping] = useState(false);
+  const [soundPosition, setSoundPosition] = useState(0);
   const [recordingName, setRecordingName] = useState('');
   const { recordingId } = useLocalSearchParams();
   const recordingUri = `${AUDIO_RECORDING_DIR}${recordingId}`;
 
   useEffect(() => {
-    const loadRecording = async () => {
+    (async () => {
       try {
         const newSound = new Audio.Sound();
         await newSound.loadAsync({ uri: recordingUri });
         newSound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
-        setSound(newSound);
+        setSound(() => newSound);
       } catch (error) {
         console.log('Error loading recording:', error);
       }
-    };
-
-    loadRecording();
+    })();
   }, []);
 
-  const handlePlayback = async () => {
-    try {
+  useEffect(() => {
+    return async () => {
       if (sound) {
-        if (isPlaying) {
-          await sound.pauseAsync();
-          setIsPlaying(false);
-        } else {
-          await sound.playAsync();
-          setIsPlaying(true);
+        try {
+          await sound.stopAsync();
+          await sound.unloadAsync();
+        } catch (error) {
+          console.log('Error stopping or unloading sound:', error);
         }
       }
-    } catch (error) {
-      console.log('Error handling playback:', error);
-    }
-  };
-
-  const onPlaybackStatusUpdate = (playbackStatus) => {
-    console.log('playbackStatus', playbackStatus);
-
-    // in review -> play -> let it finish -> button changes to triangle -> play -> nothing
-    if (playbackStatus.didJustFinish && !playbackStatus.isLooping) {
-      setIsPlaying(false);
-    }
-  };
+    };
+  }, [sound]);
 
   const handleSaveRecording = () => {
     // Save the recording with the given name
@@ -65,6 +53,42 @@ const RecordingReview = () => {
     console.log('Recording discarded');
   };
 
+  const handlePlayback = async () => {
+    try {
+      if (sound) {
+        if (isPlaying) {
+          const paused = await sound.pauseAsync();
+          setSoundPosition(paused.positionMillis);
+          setIsPlaying(false);
+        } else {
+          await sound.setPositionAsync(soundPosition);
+          await sound.playAsync();
+          setIsPlaying(true);
+        }
+      }
+    } catch (error) {
+      console.log('Error handling playback:', error);
+    }
+  };
+
+  const handleLoopSound = async () => {
+    if (sound) {
+      try {
+        await sound.setIsLoopingAsync(!isLooping);
+        setIsLooping(() => !isLooping);
+      } catch (error) {
+        console.log('Error looping sound:', error);
+      }
+    }
+  };
+
+  const onPlaybackStatusUpdate = async (playbackStatus) => {
+    if (playbackStatus.didJustFinish) {
+      setSoundPosition(0);
+      setIsPlaying(playbackStatus.isLooping);
+    }
+  };
+
   const ActionIconButton = ({ onPress, name, size, color }) => {
     return (
       <Pressable onPress={onPress}>
@@ -73,18 +97,9 @@ const RecordingReview = () => {
     );
   };
 
-  const PlayPauseButton = ({ onPress, color }) => {
-    const iconName = isPlaying ? 'pause-circle-outline' : 'play-circle-outline';
-
-    return (
-      <ActionIconButton
-        name={iconName}
-        size={108}
-        color={color}
-        onPress={onPress}
-      />
-    );
-  };
+  const playPauseIconName = isPlaying
+    ? 'pause-circle-outline'
+    : 'play-circle-outline';
 
   return (
     <View style={record.container}>
@@ -118,10 +133,19 @@ const RecordingReview = () => {
         </View>
       </View>
       <View>
-        <PlayPauseButton color="white" onPress={() => handlePlayback()} />
+        <ActionIconButton
+          name={playPauseIconName}
+          size={108}
+          color={'white'}
+          onPress={() => handlePlayback()}
+        />
+        <ActionIconButton
+          name={'loop'}
+          size={36}
+          color={'white'}
+          onPress={() => handleLoopSound()}
+        />
       </View>
-      <Text>RecordingReview</Text>
-      <Text style={{ color: 'purple' }}>{recordingUri}</Text>
     </View>
   );
 };
