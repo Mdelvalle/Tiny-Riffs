@@ -1,10 +1,14 @@
-import { COLOR } from '@constants/theme';
-import { MaterialIcons } from '@expo/vector-icons';
+import {
+  ConfirmSoundButton,
+  DiscardSoundButton,
+  LoopSoundButton,
+  PlayPauseButton,
+} from '@components/atoms/ActionButtons';
 import record from '@styles/record';
 import { Audio } from 'expo-av';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const AUDIO_RECORDING_DIR =
   'file:///data/user/0/com.valleyWare.tinyRiffs/cache/Audio/';
@@ -89,87 +93,21 @@ const RecordingReview = () => {
     }
   };
 
-  const ActionIconButton = ({ onPress, name, size, color }) => {
-    return (
-      <Pressable
-        onPress={onPress}
-        style={({ pressed }) => {
-          return {
-            opacity: pressed ? 0.6 : 1,
-          };
-        }}>
-        <MaterialIcons
-          style={{
-            backgroundColor: COLOR.dark,
-            borderRadius: 36,
-          }}
-          name={name}
-          size={size}
-          color={color}
-        />
-      </Pressable>
-    );
-  };
-
-  const PlayPauseButton = ({ onPress }) => {
-    const playPauseIconName = isPlaying
-      ? 'pause-circle-filled'
-      : 'play-circle-filled';
-
-    return (
-      <ActionIconButton
-        name={playPauseIconName}
-        size={108}
-        color={COLOR.light}
-        onPress={onPress}
-      />
-    );
-  };
-
-  const DiscardSoundButton = ({ onPress }) => {
-    return (
-      <ActionIconButton
-        name="cancel"
-        size={60}
-        color={COLOR.light}
-        onPress={onPress}
-      />
-    );
-  };
-
-  const ConfirmSoundButton = ({ onPress }) => {
-    return (
-      <ActionIconButton
-        name={'check-circle'}
-        size={60}
-        color={COLOR.light}
-        onPress={onPress}
-      />
-    );
-  };
-
-  const LoopSoundButton = ({ onPress }) => {
-    const color = isLooping ? COLOR.secondary : COLOR.light;
-
-    return (
-      <ActionIconButton
-        name={'loop'}
-        size={36}
-        color={color}
-        onPress={onPress}
-      />
-    );
-  };
-
   return (
     <View style={[record.container, styles.review]}>
       <View style={styles.primaryControls}>
         <DiscardSoundButton onPress={() => handleDiscardRecording()} />
-        <PlayPauseButton onPress={() => handlePlayback()} />
+        <PlayPauseButton
+          isPlaying={isPlaying}
+          onPress={() => handlePlayback()}
+        />
         <ConfirmSoundButton onPress={() => handleSaveRecording()} />
       </View>
       <View style={styles.secondaryControls}>
-        <LoopSoundButton onPress={() => handleLoopSound()} />
+        <LoopSoundButton
+          isLooping={isLooping}
+          onPress={() => handleLoopSound()}
+        />
       </View>
     </View>
   );

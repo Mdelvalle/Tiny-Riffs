@@ -1,4 +1,4 @@
-import RecordButton from '@components/record/RecordButton';
+import { RecordButton } from '@components/atoms/ActionButtons';
 import { FONT } from '@constants/theme';
 import record from '@styles/record';
 import { Audio } from 'expo-av';

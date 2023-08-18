@@ -1,4 +1,4 @@
-import RecordButton from '@components/record/RecordButton';
+import { RecordButton } from '@components/atoms/ActionButtons';
 import TimeSignatureButton from '@components/record/TimeSignatureButton';
 import TimesToLoop from '@components/record/TimesToLoop';
 import { SIZE } from '@constants/theme';
