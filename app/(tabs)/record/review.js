@@ -1,3 +1,4 @@
+import { COLOR } from '@constants/theme';
 import { MaterialIcons } from '@expo/vector-icons';
 import record from '@styles/record';
 import { Audio } from 'expo-av';
@@ -34,7 +35,6 @@ const RecordingReview = () => {
     return async () => {
       if (sound) {
         try {
-          await sound.stopAsync();
           await sound.unloadAsync();
         } catch (error) {
           console.log('Error stopping or unloading sound:', error);
@@ -91,22 +91,36 @@ const RecordingReview = () => {
 
   const ActionIconButton = ({ onPress, name, size, color }) => {
     return (
-      <Pressable onPress={onPress}>
-        <MaterialIcons name={name} size={size} color={color} />
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => {
+          return {
+            opacity: pressed ? 0.6 : 1,
+          };
+        }}>
+        <MaterialIcons
+          style={{
+            backgroundColor: COLOR.dark,
+            borderRadius: 36,
+          }}
+          name={name}
+          size={size}
+          color={color}
+        />
       </Pressable>
     );
   };
 
   const PlayPauseButton = ({ onPress }) => {
     const playPauseIconName = isPlaying
-      ? 'pause-circle-outline'
-      : 'play-circle-outline';
+      ? 'pause-circle-filled'
+      : 'play-circle-filled';
 
     return (
       <ActionIconButton
         name={playPauseIconName}
         size={108}
-        color={'white'}
+        color={COLOR.light}
         onPress={onPress}
       />
     );
@@ -116,8 +130,8 @@ const RecordingReview = () => {
     return (
       <ActionIconButton
         name="cancel"
-        size={72}
-        color="white"
+        size={60}
+        color={COLOR.light}
         onPress={onPress}
       />
     );
@@ -127,19 +141,21 @@ const RecordingReview = () => {
     return (
       <ActionIconButton
         name={'check-circle'}
-        size={72}
-        color={'white'}
+        size={60}
+        color={COLOR.light}
         onPress={onPress}
       />
     );
   };
 
   const LoopSoundButton = ({ onPress }) => {
+    const color = isLooping ? COLOR.secondary : COLOR.light;
+
     return (
       <ActionIconButton
         name={'loop'}
         size={36}
-        color={'white'}
+        color={color}
         onPress={onPress}
       />
     );
@@ -170,7 +186,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   secondaryControls: {
-    marginTop: 36,
+    marginTop: 18,
   },
 });
 

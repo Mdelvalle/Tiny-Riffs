@@ -4,7 +4,15 @@ import { Pressable, StyleSheet, View } from 'react-native';
 const RecordButton = ({ onPress, recording }) => {
   return (
     <Pressable
-      style={[styles.recordButton, recording && styles.recordingOuter]}
+      style={[
+        styles.recordButton,
+        recording && styles.recordingOuter,
+        ({ pressed }) => {
+          return {
+            opacity: pressed ? 0.6 : 1,
+          };
+        },
+      ]}
       onPress={onPress}>
       <View
         style={
