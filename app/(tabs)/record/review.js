@@ -3,7 +3,7 @@ import record from '@styles/record';
 import { Audio } from 'expo-av';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 const AUDIO_RECORDING_DIR =
   'file:///data/user/0/com.valleyWare.tinyRiffs/cache/Audio/';
@@ -97,63 +97,80 @@ const RecordingReview = () => {
     );
   };
 
-  const playPauseIconName = isPlaying
-    ? 'pause-circle-outline'
-    : 'play-circle-outline';
+  const PlayPauseButton = ({ onPress }) => {
+    const playPauseIconName = isPlaying
+      ? 'pause-circle-outline'
+      : 'play-circle-outline';
+
+    return (
+      <ActionIconButton
+        name={playPauseIconName}
+        size={108}
+        color={'white'}
+        onPress={onPress}
+      />
+    );
+  };
+
+  const DiscardSoundButton = ({ onPress }) => {
+    return (
+      <ActionIconButton
+        name="cancel"
+        size={72}
+        color="white"
+        onPress={onPress}
+      />
+    );
+  };
+
+  const ConfirmSoundButton = ({ onPress }) => {
+    return (
+      <ActionIconButton
+        name={'check-circle'}
+        size={72}
+        color={'white'}
+        onPress={onPress}
+      />
+    );
+  };
+
+  const LoopSoundButton = ({ onPress }) => {
+    return (
+      <ActionIconButton
+        name={'loop'}
+        size={36}
+        color={'white'}
+        onPress={onPress}
+      />
+    );
+  };
 
   return (
-    <View style={record.container}>
-      <View style={{ width: '100%' }}>
-        <TextInput
-          style={styles.nameInput}
-          underlineColorAndroid={'purple'}
-          onChangeText={(t) => setRecordingName(t)}
-          value={recordingName}
-        />
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 36,
-            paddingLeft: 36,
-            paddingRight: 36,
-          }}>
-          <ActionIconButton
-            name="cancel"
-            size={72}
-            color="white"
-            onPress={() => handleDiscardRecording()}
-          />
-          <ActionIconButton
-            name={'check-circle'}
-            size={72}
-            color={'white'}
-            onPress={() => handleSaveRecording()}
-          />
-        </View>
+    <View style={[record.container, styles.review]}>
+      <View style={styles.primaryControls}>
+        <DiscardSoundButton onPress={() => handleDiscardRecording()} />
+        <PlayPauseButton onPress={() => handlePlayback()} />
+        <ConfirmSoundButton onPress={() => handleSaveRecording()} />
       </View>
-      <View>
-        <ActionIconButton
-          name={playPauseIconName}
-          size={108}
-          color={'white'}
-          onPress={() => handlePlayback()}
-        />
-        <ActionIconButton
-          name={'loop'}
-          size={36}
-          color={'white'}
-          onPress={() => handleLoopSound()}
-        />
+      <View style={styles.secondaryControls}>
+        <LoopSoundButton onPress={() => handleLoopSound()} />
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  nameInput: {
-    color: 'white',
-    fontSize: 36,
+  review: {
+    justifyContent: 'flex-end',
+  },
+  primaryControls: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  secondaryControls: {
+    marginTop: 36,
   },
 });
 
