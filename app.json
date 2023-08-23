@@ -21,8 +21,14 @@
     ],
     "android": {
       "package": "com.valleyWare.tinyRiffs",
-      "versionCode": 1
+      "versionCode": 1,
+      "softwareKeyboardLayoutMode": "pan"
     },
-    "sdkVersion": "48.0.0"
+    "sdkVersion": "48.0.0",
+    "splash": {
+      "image": "./assets/riff-splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#800080"
+    }
   }
 }

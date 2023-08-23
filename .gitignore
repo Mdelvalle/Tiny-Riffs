@@ -2,3 +2,4 @@ node_modules
 .expo
 .vscode
 eas.json
+.DS_Store

@@ -9,7 +9,7 @@ const TabsLayout = () => {
         tabBarLabelStyle: {
           fontFamily: FONT.family,
           fontSize: SIZE.lg,
-          textTransform: 'uppercase',
+          textTransform: 'capitalize',
         },
         tabBarInactiveBackgroundColor: COLOR.dark,
         tabBarActiveBackgroundColor: COLOR.dark,

@@ -4,6 +4,7 @@ import TimesToLoop from '@components/record/TimesToLoop';
 import { SIZE } from '@constants/theme';
 import record from '@styles/record';
 import { Audio } from 'expo-av';
+// import { StorageAccessFramework } from 'expo-file-system';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -13,16 +14,27 @@ function RecordingSetup() {
   const router = useRouter();
 
   useEffect(() => {
-    const getPermission = async () => {
+    const getRecordingPermission = async () => {
       try {
         const permission = await Audio.requestPermissionsAsync();
-        console.log('Permission Granted', permission.granted);
+        console.log('Recording permission Granted', permission.granted);
       } catch (error) {
-        console.log('getPermission error', error);
+        console.log('getRecordingPermission error', error);
       }
     };
 
-    getPermission();
+    // const getStoragePermission = async () => {
+    //   try {
+    //     const permission =
+    //       await StorageAccessFramework.requestDirectoryPermissionsAsync();
+    //     console.log('Storage permission Granted', permission.granted);
+    //   } catch (error) {
+    //     console.log('getStoragePermission error', error);
+    //   }
+    // };
+
+    getRecordingPermission();
+    // getStoragePermission();
   }, []);
 
   const handleTimeSignatureButtonPress = (button) => {

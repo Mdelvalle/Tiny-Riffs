@@ -23,6 +23,11 @@ const RecordingInProgress = () => {
     (async () => {
       try {
         const newRecording = new Audio.Recording();
+
+        await Audio.setAudioModeAsync({
+          playsInSilentModeIOS: true,
+          staysActiveInBackground: true,
+        });
         await newRecording.prepareToRecordAsync(
           Audio.RecordingOptionsPresets.HIGH_QUALITY,
         );

@@ -1,4 +1,4 @@
-import { COLOR } from '@constants/theme';
+import { COLOR, FONT } from '@constants/theme';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Pressable, StyleSheet } from 'react-native';
 
@@ -9,7 +9,7 @@ const buttonAnimation = ({ pressed }) => {
 };
 
 export const RecordButton = ({ onPress, recording }) => {
-  const recordingIconName = recording ? 'stop-circle' : 'record-circle-outline';
+  const recordingIconName = recording ? 'stop-circle' : 'record-circle';
 
   return (
     <Pressable style={buttonAnimation} onPress={onPress}>
@@ -29,10 +29,10 @@ const ActionIconButton = ({ onPress, name, size, color }) => {
     <Pressable onPress={onPress} style={buttonAnimation}>
       <MaterialIcons
         style={styles.buttonBackground}
-        backgroundColor={COLOR.light}
+        backgroundColor={COLOR.dark}
         name={name}
         size={size}
-        color={color || COLOR.dark}
+        color={color || COLOR.light}
       />
     </Pressable>
   );
@@ -57,7 +57,7 @@ export const ConfirmSoundButton = ({ onPress }) => {
 };
 
 export const LoopSoundButton = ({ onPress, isLooping }) => {
-  const color = isLooping ? COLOR.secondary : COLOR.dark;
+  const color = isLooping ? COLOR.secondary : COLOR.light;
 
   return (
     <ActionIconButton name={'loop'} size={36} color={color} onPress={onPress} />
@@ -66,6 +66,7 @@ export const LoopSoundButton = ({ onPress, isLooping }) => {
 
 const styles = StyleSheet.create({
   buttonBackground: {
-    borderRadius: 36,
+    borderRadius: 50,
+    fontFamily: FONT.family,
   },
 });
