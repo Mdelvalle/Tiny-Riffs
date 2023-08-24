@@ -60,6 +60,7 @@ const RecordingReview = () => {
   }, [sound]);
 
   const toggleModal = () => {
+    setRecordingName('');
     setModalVisible(!isModalVisible);
   };
 
@@ -146,6 +147,12 @@ const RecordingReview = () => {
 
   return (
     <View style={[record.container, styles.review]}>
+      <View style={styles.secondaryControls}>
+        <LoopSoundButton
+          isLooping={isLooping}
+          onPress={() => handleLoopSound()}
+        />
+      </View>
       <View style={styles.primaryControls}>
         <DiscardSoundButton onPress={() => handleDiscard()} />
         <PlayPauseButton
@@ -153,12 +160,6 @@ const RecordingReview = () => {
           onPress={() => handlePlayback()}
         />
         <ConfirmSoundButton onPress={toggleModal} />
-      </View>
-      <View style={styles.secondaryControls}>
-        <LoopSoundButton
-          isLooping={isLooping}
-          onPress={() => handleLoopSound()}
-        />
       </View>
       <Modal
         animationType="fade"
@@ -173,7 +174,7 @@ const RecordingReview = () => {
               onChangeText={setRecordingName}
               style={styles.modalInput}
               multiline={false}
-              placeholder="Random noodle"
+              placeholder="Type here"
               placeholderTextColor="rgba(0, 0, 0, 0.2)"
             />
             <View style={styles.buttonsContainer}>
@@ -196,9 +197,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingLeft: 42,
+    marginTop: 18,
+    paddingRight: 42,
   },
   secondaryControls: {
-    marginTop: 18,
+    borderWidth: 6,
+    borderRadius: 50,
   },
   modalContainer: {
     flex: 1,
@@ -242,7 +247,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLOR.primary,
-    font: 'white',
   },
   buttonPressed: {
     opacity: 0.7,

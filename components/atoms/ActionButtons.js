@@ -24,15 +24,22 @@ export const RecordButton = ({ onPress, recording }) => {
   );
 };
 
-const ActionIconButton = ({ onPress, name, size, color }) => {
+const ActionIconButton = ({
+  onPress,
+  name,
+  size,
+  customStyles = {},
+  color = COLOR.light,
+  bg = COLOR.dark,
+}) => {
   return (
-    <Pressable onPress={onPress} style={buttonAnimation}>
+    <Pressable style={buttonAnimation} onPress={onPress}>
       <MaterialIcons
-        style={styles.buttonBackground}
-        backgroundColor={COLOR.dark}
+        style={[styles.buttonBackground, customStyles]}
         name={name}
         size={size}
-        color={color || COLOR.light}
+        backgroundColor={bg}
+        color={color}
       />
     </Pressable>
   );
@@ -57,10 +64,17 @@ export const ConfirmSoundButton = ({ onPress }) => {
 };
 
 export const LoopSoundButton = ({ onPress, isLooping }) => {
-  const color = isLooping ? COLOR.secondary : COLOR.light;
+  const color = isLooping ? COLOR.primary : COLOR.dark;
+  const bg = isLooping ? '#260057' : COLOR.light;
 
   return (
-    <ActionIconButton name={'loop'} size={36} color={color} onPress={onPress} />
+    <ActionIconButton
+      name={'loop'}
+      size={48}
+      color={color}
+      bg={bg}
+      onPress={onPress}
+    />
   );
 };
 
