@@ -22,9 +22,14 @@
     "android": {
       "package": "com.valleyWare.tinyRiffs",
       "versionCode": 1,
-      "softwareKeyboardLayoutMode": "pan"
+      "softwareKeyboardLayoutMode": "pan",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff",
+        "monochromeImage": "./assets/monochrome-icon.png"
+      }
     },
-    "sdkVersion": "48.0.0",
+    "sdkVersion": "48.0.18",
     "splash": {
       "image": "./assets/riff-splash.png",
       "resizeMode": "contain",
