@@ -1,16 +1,13 @@
 import { RecordButton } from '@components/atoms/ActionButtons';
-import TimeSignatureButton from '@components/record/TimeSignatureButton';
-import TimesToLoop from '@components/record/TimesToLoop';
 import { SIZE } from '@constants/theme';
 import record from '@styles/record';
 import { Audio } from 'expo-av';
 // import { StorageAccessFramework } from 'expo-file-system';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 function RecordingSetup() {
-  const [selectedButton, setSelectedButton] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -32,14 +29,10 @@ function RecordingSetup() {
     //     console.log('getStoragePermission error', error);
     //   }
     // };
+    // getStoragePermission();
 
     getRecordingPermission();
-    // getStoragePermission();
   }, []);
-
-  const handleTimeSignatureButtonPress = (button) => {
-    setSelectedButton(button);
-  };
 
   const handleRecordButtonPress = async () => {
     try {
@@ -50,40 +43,7 @@ function RecordingSetup() {
   };
 
   return (
-    <View style={record.container}>
-      <View>
-        <View style={[styles.timeSignaturesRow, styles.mb]}>
-          <TimeSignatureButton
-            top={2}
-            bottom={4}
-            selected={selectedButton === '1'}
-            onPress={() => handleTimeSignatureButtonPress('1')}
-            isFirst
-          />
-          <TimeSignatureButton
-            top={3}
-            bottom={4}
-            selected={selectedButton === '2'}
-            onPress={() => handleTimeSignatureButtonPress('2')}
-          />
-        </View>
-        <View style={styles.timeSignaturesRow}>
-          <TimeSignatureButton
-            top={6}
-            bottom={8}
-            selected={selectedButton === '3'}
-            onPress={() => handleTimeSignatureButtonPress('3')}
-            isFirst
-          />
-          <TimeSignatureButton
-            top={4}
-            bottom={4}
-            selected={selectedButton === '4'}
-            onPress={() => handleTimeSignatureButtonPress('4')}
-          />
-        </View>
-      </View>
-      <TimesToLoop />
+    <View style={[record.container, styles.container]}>
       <RecordButton
         recording={false}
         onPress={() => handleRecordButtonPress()}
@@ -93,6 +53,9 @@ function RecordingSetup() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'flex-end',
+  },
   timeSignaturesRow: {
     flexDirection: 'row',
   },

@@ -1,8 +1,10 @@
 const COLOR = {
-  primary: 'purple',
-  secondary: 'orangered',
-  light: 'white',
-  dark: 'black',
+  primary: '#7d12ff',
+  secondary: '#ab20fd',
+  tertiary: '#200589',
+  accent: '#5900c5',
+  light: '#fbf8fd',
+  dark: '#000000',
 };
 
 const FONT = {

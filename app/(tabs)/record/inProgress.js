@@ -119,8 +119,8 @@ const RecordingInProgress = () => {
   };
 
   /**
-   * Takes time in seconds and makes it pretty
-   * 00:00
+   * Takes time in seconds and
+   * outputs in this format: 00:00
    */
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);

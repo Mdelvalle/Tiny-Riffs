@@ -7,7 +7,12 @@ import {
 import { COLOR, FONT } from '@constants/theme';
 import record from '@styles/record';
 import { Audio } from 'expo-av';
-import * as FileSystem from 'expo-file-system';
+import {
+  EncodingType,
+  StorageAccessFramework as SAF,
+  readAsStringAsync,
+  writeAsStringAsync,
+} from 'expo-file-system';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
@@ -34,7 +39,8 @@ const RecordingReview = () => {
   const router = useRouter();
 
   useEffect(() => {
-    (async () => {
+    // Load recording into a playable Sound
+    const loadRecording = async () => {
       try {
         const newSound = new Audio.Sound();
         await newSound.loadAsync({ uri: recordingUri });
@@ -43,62 +49,92 @@ const RecordingReview = () => {
       } catch (error) {
         console.log('Error loading recording:', error);
       }
-    })();
+    };
+
+    loadRecording();
   }, []);
 
   useEffect(() => {
-    return async () => {
+    // If Sound is not unloaded when component unmounts
+    // it may not allow a new Sound to be loaded.
+    // i.e. record > load > play > cancel > record > load > error
+    const unloadRecording = async () => {
       if (sound) {
         try {
-          console.log('unloading sound');
           await sound.unloadAsync();
         } catch (error) {
           console.log('Error stopping or unloading sound:', error);
         }
       }
     };
+
+    return unloadRecording;
   }, [sound]);
 
   const toggleModal = () => {
-    setRecordingName('');
-    setModalVisible(!isModalVisible);
+    setRecordingName(() => '');
+    setModalVisible(() => !isModalVisible);
   };
 
   const handleSave = async () => {
-    // TODO: NO IDEA WHERE IT'S SAVING ON THE PHONE
-    // {FileSystem.documentDirectory} does not seem to be correct
-    const tinyRiffsDir = 'TinyRiffs/';
-    const newFilePath = `${FileSystem.documentDirectory}${tinyRiffsDir}${
-      recordingName || recordingId
-    }`;
-
     try {
-      // await FileSystem.copyAsync({
-      //   from: recordingUri,
-      //   to: newFilePath,
-      // });
-
       // Save the recording with the given name
-      console.log('Recording saved to:', newFilePath);
+      const fileExt = recordingId.split('.')[1]; // TODO: validate name input
+      const fileName = `${recordingName}.${fileExt}` || recordingId;
+      const mimetype = 'audio/mp4'; // TODO: put in config or extract from file
+      await saveRecordingToPublicStorage(fileName, mimetype);
+
+      // Unload sound before navigating
+      await sound.unloadAsync();
+      setSound(() => null);
+
+      // Show new sound in riffs screen
+      router.push('/riffs');
     } catch (error) {
       console.error('Error saving recording:', error);
     }
   };
 
+  const saveRecordingToPublicStorage = async (fileName, mimetype) => {
+    if (Platform.OS === 'android') {
+      // User chooses which directory to use
+      const permission = await SAF.requestDirectoryPermissionsAsync();
+
+      if (permission.granted) {
+        // Converting to string because
+        const base64Sound = await readAsStringAsync(recordingUri, {
+          encoding: EncodingType.Base64,
+        });
+        const newFileUri = await SAF.createFileAsync(
+          permission.directoryUri,
+          fileName,
+          mimetype,
+        );
+
+        await writeAsStringAsync(newFileUri, base64Sound, {
+          encoding: EncodingType.Base64,
+        });
+      } else {
+        // TODO: gracefully handle denial
+        console.log('Permission to save file to directory was denied.');
+      }
+    } // TODO: iOS case (shareAsync)
+  };
+
   const handleDiscard = () => {
-    // Discard the recording
     router.replace('/record/setup');
-    console.log('Discarding');
   };
 
   const handlePlayback = async () => {
     try {
       if (sound) {
         if (isPlaying) {
+          // Pause
           const paused = await sound.pauseAsync();
           setSoundPosition(paused.positionMillis);
           setIsPlaying(false);
         } else {
+          // Play
           await sound.setPositionAsync(soundPosition);
           await sound.playAsync();
           setIsPlaying(true);
@@ -113,7 +149,7 @@ const RecordingReview = () => {
     if (sound) {
       try {
         await sound.setIsLoopingAsync(!isLooping);
-        setIsLooping(() => !isLooping);
+        setIsLooping((prev) => !prev);
       } catch (error) {
         console.log('Error looping sound:', error);
       }
@@ -122,7 +158,10 @@ const RecordingReview = () => {
 
   const onPlaybackStatusUpdate = async (playbackStatus) => {
     if (playbackStatus.didJustFinish) {
+      // After the recording ends, it needs to be reset to the beginning
       setSoundPosition(0);
+
+      // Decides whether to keep playing or not
       setIsPlaying(playbackStatus.isLooping);
     }
   };
