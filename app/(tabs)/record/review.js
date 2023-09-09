@@ -88,6 +88,11 @@ const RecordingReview = () => {
       await sound.unloadAsync();
       setSound(() => null);
 
+      // TODO: better way to reset the Review screen
+      // so that navigating back to Record from Riffs
+      // shows the Setup screen
+      router.replace('/record/setup');
+
       // Show new sound in riffs screen
       router.push('/riffs');
     } catch (error) {
