@@ -14,7 +14,6 @@ function RecordingSetup() {
     const getRecordingPermission = async () => {
       try {
         const permission = await Audio.requestPermissionsAsync();
-        console.log('Recording permission Granted', permission.granted);
       } catch (error) {
         console.log('getRecordingPermission error', error);
       }
