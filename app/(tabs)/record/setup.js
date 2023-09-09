@@ -2,7 +2,6 @@ import { RecordButton } from '@components/atoms/ActionButtons';
 import { SIZE } from '@constants/theme';
 import record from '@styles/record';
 import { Audio } from 'expo-av';
-// import { StorageAccessFramework } from 'expo-file-system';
 import { useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -13,22 +12,12 @@ function RecordingSetup() {
   useEffect(() => {
     const getRecordingPermission = async () => {
       try {
-        const permission = await Audio.requestPermissionsAsync();
+        await Audio.requestPermissionsAsync();
       } catch (error) {
         console.log('getRecordingPermission error', error);
       }
+      // TODO: handle permission rejection
     };
-
-    // const getStoragePermission = async () => {
-    //   try {
-    //     const permission =
-    //       await StorageAccessFramework.requestDirectoryPermissionsAsync();
-    //     console.log('Storage permission Granted', permission.granted);
-    //   } catch (error) {
-    //     console.log('getStoragePermission error', error);
-    //   }
-    // };
-    // getStoragePermission();
 
     getRecordingPermission();
   }, []);
