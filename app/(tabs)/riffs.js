@@ -1,4 +1,5 @@
 import { COLOR, FONT, SIZE } from '@constants/theme';
+import { SetupService } from '@services';
 import { StorageAccessFramework as SAF } from 'expo-file-system';
 import { useEffect, useState } from 'react';
 import {
@@ -8,11 +9,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import TrackPlayer, { Capability } from 'react-native-track-player';
 
 const Riffs = () => {
   const [riffs, setRiffs] = useState([]);
   const [directoryUri, setDirectoryUri] = useState(null);
+  // const [isPlayerReady, setIsPlayerReady] = useState(false);
 
   // Get storage permissions
   useEffect(() => {
@@ -33,29 +34,18 @@ const Riffs = () => {
     getStoragePermission();
   }, []);
 
-  // Setup TrackPlayer
   useEffect(() => {
-    const setupTrackPlayer = async () => {
-      try {
-        await TrackPlayer.setupPlayer({});
-        await TrackPlayer.updateOptions({
-          stopWithApp: true,
-          capabilities: [
-            Capability.Play,
-            Capability.Pause,
-            Capability.SkipToNext,
-            Capability.SkipToPrevious,
-            Capability.Stop,
-            Capability.SeekTo,
-          ],
-          compactCapabilities: [Capability.Play, Capability.Pause],
-        });
-      } catch (error) {
-        console.error('TrackPlayer setup error:', error);
-      }
+    const setup = async () => {
+      await SetupService();
+
+      // if (isSetup) {
+      //   await addTrack()
+      // }
+
+      // setIsPlayerReady(() => isSetup);
     };
 
-    setupTrackPlayer();
+    setup();
   }, []);
 
   // Fetch riffs
@@ -101,10 +91,8 @@ const Riffs = () => {
     </TouchableOpacity>
   );
 
-  // if (!riffs.length) {
-  //   return (
-
-  //   )
+  // if (!isPlayerReady) {
+  //   return <ActivityIndicator />;
   // }
 
   return (
