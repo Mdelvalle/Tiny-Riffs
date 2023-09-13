@@ -108,7 +108,7 @@ const Riffs = () => {
 
   const renderItem = ({ item, index }) => (
     <TouchableOpacity
-      style={[styles.listItem, index > 0 && styles.mt]}
+      style={styles.listItem}
       onPress={() => handleTrackPlayback(item)}>
       <Text style={[styles.fileMeta, styles.fileName]}>{item.fileName}</Text>
       <View style={styles.metaContainer}>
@@ -135,6 +135,7 @@ const Riffs = () => {
           flexGrow: 1,
           justifyContent: 'center',
         }}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
     </View>
   );
@@ -151,20 +152,16 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     alignSelf: 'stretch',
-    marginLeft: SIZE.lg,
-    marginRight: SIZE.lg,
-  },
-  mt: {
-    marginTop: SIZE.md,
-  },
-  listItem: {
-    alignItems: 'flex-start',
-    backgroundColor: COLOR.accent,
-    borderRadius: 9,
-    borderColor: COLOR.tertiary,
-    borderWidth: 2,
     paddingLeft: SIZE.lg,
     paddingRight: SIZE.lg,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: COLOR.secondary,
+  },
+  listItem: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
     paddingTop: SIZE.sm,
     paddingBottom: SIZE.sm,
   },
@@ -177,14 +174,14 @@ const styles = StyleSheet.create({
   },
   metaContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '60%',
+    justifyContent: 'space-evenly',
+    width: '50%',
   },
   fileMeta: {
     borderRadius: 9,
     borderWidth: 1,
-    borderColor: '#00C559',
-    color: '#00C559',
+    borderColor: COLOR.light,
+    color: COLOR.light,
     fontFamily: FONT.family,
     fontSize: 12,
     padding: 6,
